@@ -373,6 +373,8 @@ Route::group(['prefix' => 'tutor', 'middleware' => ['TutorAuthenticate']], funct
     // Tutor Class Mapping
     Route::post('classmapping', [TutorProfileController::class, 'classmapping'])->name('tutor.classmapping');
     Route::get('classmappingdelete/{id}', [TutorProfileController::class, 'classmappingdelete'])->name('tutor.classmappingdelete');
+    Route::get('startclass/{id}', [ClassController::class, 'startclass'])->name('tutor.startclass');
+    Route::post('endclassnow', [ClassController::class, 'endclassnow'])->name('tutor.endclassnow');
     // Tutor Class Scheduling
     // Route::post('classschedule',[ClassScheduleController::class,'create'])->name('tutor.classschedule.create');
 

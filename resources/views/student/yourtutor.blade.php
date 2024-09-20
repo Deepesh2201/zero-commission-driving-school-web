@@ -85,7 +85,7 @@ use App\Models\students\studentattendance;
                 <div class="col-xl-4 col-xxl-3 col-md-6 col-sm-12 col-xs-12">
                     <div class="">
 
-                       
+
 
                         <div class="card instructorCard">
                             <img class="card-img-top"
@@ -105,11 +105,12 @@ use App\Models\students\studentattendance;
                                 </div>
                                 <p class="card-text">With over a decade of experience as a certified driving instructor,
                                     John Doe has helped hundreds of learners confidently navigate the roads....</p>
-                               
+
                                     <a href="/student/tutorprofile/{{ $tutorlist->tutor_id }}" class="btn btn-primary">View
                                     Profile</a>
-                                <!-- <a href="tutormessages/{{$tutorlist->tutor_id}}" class="btn btn-primary">Slots</a>
-                                <a href="tutormessages/{{$tutorlist->tutor_id}}" class="btn btn-primary">Chat</a> -->
+                                    {{-- <a href="enrollupdate/{{$tutorlist->tutor_id}}" class="bookedSlot"><button class="btn btn-sm btn-success">Booked Slots</button></a> --}}
+                                {{-- <a href="tutormessages/{{$tutorlist->tutor_id}}" class="btn btn-primary">Slots</a> --}}
+                                {{-- <a href="tutormessages/{{$tutorlist->tutor_id}}" class="btn btn-primary">Chat</a> --}}
                             </div>
                         </div>
 

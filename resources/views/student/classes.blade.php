@@ -41,7 +41,7 @@
                 <div class="row ">
 
 
-                    
+
                     <div class="col-md-2 mt-4" hidden>
                         <select class="form-control" name="batch" id="batchid">
                             <option value="">Select Batch</option>
@@ -89,12 +89,10 @@
                         <tr>
                             <th scope="col">S.No.</th>
                             {{-- <th scope="col">Meeting ID</th> --}}
-                            <th scope="col">Status</th>
-                           
-                            {{-- <th scope="col">Batch</th> --}}
-                            <th scope="col">Topic</th>
                             <th scope="col">Instructor</th>
-                            <th scope="col">Start Time</th>
+                            <th scope="col">Topic</th>
+                            <th scope="col">Date & Time</th>
+                            <th scope="col">Status</th>
                             {{-- <th scope="col">Duration</th> --}}
                             <th scope="col">Action</th>
                         </tr>
@@ -103,28 +101,24 @@
                         @foreach ($classes as $class)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td>{{ $class->tutor_name }}</td>
+                            <td>{{ $class->topic }}</td>
+                            <td>{{$class->date ? Carbon\Carbon::parse($class->date)->format('d-m-Y') :''}} {{$class->slot ? Carbon\Carbon::parse($class->slot)->format(' h:i A') :''}} </td>
                             {{-- <td>{{ $class->meeting_id }}</td> --}}
                             {{-- <td>{{ $class->status }}</td> --}}
                             <td>
-                                @if ($class->status == 'confirmed' || $class->status == 'Confirmed')
+                                @if ($class->status == '1')
                                     <span class="badge bg-success">Confirmed</span>
-                                @elseif ($class->status == 'waiting' || $class->status == 'Waiting')
-                                    <span class="badge bg-primary">Waiting Confirmation</span>
-                                @elseif ($class->status == 'started' || $class->status == 'Started')
-                                    <span class="badge blinking-icon" style="background: red"><i class="ri-record-circle-line "></i> Live..</span>
-                                @elseif ($class->status == 'cancelled' || $class->status == 'Cancelled')
-                                    <span class="badge bg-danger">Cancelled</span>
-                                @elseif ($class->status == 'completed' || $class->status == 'Completed')
-                                    <span class="badge bg-success">Completed</span>
-                                {{-- @elseif ($liveclasses->status == 8)
-                                    <span class="badge bg-primary">{{ $liveclasses->currentstatus }}</span> --}}
+                                @elseif ($class->status == '2')
+                                    <span class="badge bg-danger">Started</span>
+                                    @else
+                                    <span class="badge bg-primary">Completed</span>
                                 @endif
                             </td>
-                       
+
                             {{-- <td>{{ $class->batch }}</td> --}}
                             <td>{{ $class->topics }}</td>
-                            <td>{{ $class->tutor_name }}</td>
-                           <td>{{$class->start_time ? Carbon\Carbon::parse($class->start_time)->format('d/m/Y h:i A') :''}}</td>
+
 
                             {{-- <td>{{ $class->duration }} min</td> --}}
                             <td>
@@ -137,10 +131,10 @@
                                         Class</button>
                                     {{-- </a> --}}
                                 @endif
-                                @if ($class->is_completed == 1 || $class->status == 'completed' || $class->status == 'Completed')                               
+                                @if ($class->is_completed == 1 || $class->status == 'completed' || $class->status == 'Completed')
                                 @if (session('usertype') == 'Parent')
                                 @else
-                            
+
                                 <button class="btn btn-sm btn-primary" data-toggle="modal"
                                     data-target="#openreviewsmodal"
                                     onclick="openfeedbackmodal('{{$class->class_id}}','{{$class->subject_id}}','{{$class->tutor_id}}')"><span
@@ -227,9 +221,9 @@
 
                         <div class="col-12 col-md-12 col-ms-12 mb-3">
                             <label>Comments<span style="color:red">*</span></label>
-                           
+
                             <textarea class="form-control" id="comments" name="comments" required></textarea>
-                            
+
                         </div>
                         <span class="text-danger">
                             @error('comments')
@@ -345,7 +339,7 @@ $.ajax({
     data: {
         _token: '{{ csrf_token() }}',
         id: id,
-        
+
     },
     success: function(dataResult) {
         dataResult = JSON.parse(dataResult);

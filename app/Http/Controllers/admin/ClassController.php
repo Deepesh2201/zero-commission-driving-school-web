@@ -8,11 +8,13 @@ use App\Models\batchstudentmapping;
 use App\Models\students\studentattendance;
 use App\Models\batches;
 use App\Models\classes;
+use App\Models\SlotBooking;
 use App\Models\subjects;
 use App\Models\zoom_classes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\status;
+use Carbon\Carbon;
 class ClassController extends Controller
 {
     public function index(){
@@ -80,19 +82,24 @@ class ClassController extends Controller
 
         $targetValue = session('userid')->id; // The value we want to check in the JSON array
 
-        $classes = zoom_classes::select('zoom_classes.*','zoom_classes.id as class_id','tutorregistrations.name as tutor_name','zoom_classes.topic_name as topics','zoom_classes.tutor_id as tutor_id','subjects.id as subject_id','subjects.name as subjects',)
-        ->join('slot_bookings','slot_bookings.meeting_id','zoom_classes.id')
-        // ->join('batchstudentmappings','batchstudentmappings.batch_id','zoom_classes.batch_id')
-        // ->join('batches','batches.id','zoom_classes.batch_id')
-        ->join('subjects','subjects.id','slot_bookings.subject_id')
-        ->join('tutorregistrations','tutorregistrations.id','zoom_classes.tutor_id')
-        // ->join('topics','topics.id','zoom_classes.topic_id')
-        // ->whereRaw("JSON_CONTAINS(batchstudentmappings.student_data, '\"$targetValue\"')")
-        ->where('zoom_classes.is_active',1)
-        ->where('slot_bookings.student_id',session('userid')->id)
-        // ->where('zoom_classes.status','like', '%waiting%')
-        ->where('zoom_classes.is_completed',0)
-        ->get();
+        // $classes = zoom_classes::select('zoom_classes.*','zoom_classes.id as class_id','tutorregistrations.name as tutor_name','zoom_classes.topic_name as topics','zoom_classes.tutor_id as tutor_id','subjects.id as subject_id','subjects.name as subjects',)
+        // ->join('slot_bookings','slot_bookings.meeting_id','zoom_classes.id')
+        // // ->join('batchstudentmappings','batchstudentmappings.batch_id','zoom_classes.batch_id')
+        // // ->join('batches','batches.id','zoom_classes.batch_id')
+        // ->join('subjects','subjects.id','slot_bookings.subject_id')
+        // ->join('tutorregistrations','tutorregistrations.id','zoom_classes.tutor_id')
+        // // ->join('topics','topics.id','zoom_classes.topic_id')
+        // // ->whereRaw("JSON_CONTAINS(batchstudentmappings.student_data, '\"$targetValue\"')")
+        // ->where('zoom_classes.is_active',1)
+        // ->where('slot_bookings.student_id',session('userid')->id)
+        // // ->where('zoom_classes.status','like', '%waiting%')
+        // ->where('zoom_classes.is_completed',0)
+        // ->get();
+
+        $classes = SlotBooking::select('slot_bookings.*','tutorregistrations.name as tutor_name')
+        ->join('tutorregistrations','tutorregistrations.id','slot_bookings.tutor_id')
+        ->where('student_id', session('userid')->id)->get();
+
         $subjects = subjects::where('is_active',1)->get();
         $batches = batches::where('is_active',1)->get();
 // dd($classes);
@@ -377,6 +384,36 @@ return view('student.classes',get_defined_vars());
         $classes = classes::where('is_active',1)->get();
         $statuses = status::select('*')->get();
         return view('admin.completedclasses',get_defined_vars());
+    }
+
+    public function startclass($id){
+        $data = SlotBooking::find($id);
+        $data->status = 2;
+        $data->class_start_time = Carbon::now('Europe/London');
+        $res = $data->update();
+
+        if($res){
+            return redirect()->route('tutor.liveclass.classlist')->with('success', 'Class started successfully.');
+        }
+        else{
+            return redirect()->route('tutor.liveclass.classlist')->with('fail','Something went wrong. Failed to start class.');
+        }
+    }
+    public function endclassnow(Request $request){
+        $data = SlotBooking::find($request->id);
+        $data->status = 3;
+        $data->topic = $request->topic;
+        $data->ratings_to_student = $request->rating;
+        $data->remarks = $request->remarks;
+        $data->class_end_time = Carbon::now('Europe/London');
+        $res = $data->update();
+
+        if($res){
+            return redirect()->route('tutor.liveclass.classlist')->with('success', 'Class completed successfully.');
+        }
+        else{
+            return redirect()->route('tutor.liveclass.classlist')->with('fail','Something went wrong. Failed to end class.');
+        }
     }
 }
 

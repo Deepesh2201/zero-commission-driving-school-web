@@ -29,17 +29,22 @@ class GoogleCalendarController extends Controller
 
     public function classlist()
     {
-        $liveclasses = zoom_classes::select('zoom_classes.*', 'zoom_classes.id as liveclass_id', 'studentregistrations.name as studentname', 'subjects.name as subjectname', 'classes.name as classname', 'slot_bookings.date as slotdate', 'slot_bookings.slot as slottime')
-            ->join('slot_bookings', 'slot_bookings.meeting_id', 'zoom_classes.id')
-            ->join('studentregistrations', 'studentregistrations.id', 'slot_bookings.student_id')
-            ->join('paymentstudents', 'paymentstudents.id', 'slot_bookings.class_schedule_id')
-            ->join('subjects', 'subjects.id', 'paymentstudents.subject_id')
-            ->join('classes', 'classes.id', 'paymentstudents.class_id')
-            ->where('zoom_classes.is_completed', 0)
-            ->where('zoom_classes.is_active', 1)
-            ->where('zoom_classes.tutor_id', session('userid')->id)
-            ->orderby('zoom_classes.created_at', 'desc')
-            ->get();
+        // $liveclasses = zoom_classes::select('zoom_classes.*', 'zoom_classes.id as liveclass_id', 'studentregistrations.name as studentname', 'subjects.name as subjectname', 'classes.name as classname', 'slot_bookings.date as slotdate', 'slot_bookings.slot as slottime')
+        //     ->join('slot_bookings', 'slot_bookings.meeting_id', 'zoom_classes.id')
+        //     ->join('studentregistrations', 'studentregistrations.id', 'slot_bookings.student_id')
+        //     ->join('paymentstudents', 'paymentstudents.id', 'slot_bookings.class_schedule_id')
+        //     ->join('subjects', 'subjects.id', 'paymentstudents.subject_id')
+        //     ->join('classes', 'classes.id', 'paymentstudents.class_id')
+        //     ->where('zoom_classes.is_completed', 0)
+        //     ->where('zoom_classes.is_active', 1)
+        //     ->where('zoom_classes.tutor_id', session('userid')->id)
+        //     ->orderby('zoom_classes.created_at', 'desc')
+        //     ->get();
+        $liveclasses = SlotBooking::select('slot_bookings.*','studentregistrations.name as student_name')
+        ->join('studentregistrations','studentregistrations.id','slot_bookings.student_id')
+        ->where('slot_bookings.tutor_id',session('userid')->id)
+        ->orderby('slot_bookings.date', 'desc')
+        ->get(10);
         $classes = (new CommonController)->classes();
         return view('tutor.liveclasses', compact('liveclasses', 'classes'));
     }
@@ -110,20 +115,20 @@ class GoogleCalendarController extends Controller
     }
     public function scheduleclass(Request $request)
     {
-        
+
         if (session('userid')->is_active == 0) {
             return back()->with('fail', 'Sorry! your Account is not verified. Please contact administrator');
         }
         $request->validate([
             'classpassword' => 'required',
         ]);
-        
+
         $classdata = SlotBooking::select('*')->where('id', $request->classslotid)->first();
         $studentpayment = paymentstudents::select('*')->where('id', $classdata->class_schedule_id)->first();
         $student = studentregistration::find($studentpayment->student_id);
         $tutor = tutorregistration::find($studentpayment->tutor_id);
         // $slotbooking->class_schedule_id = $studentpayment->id;
-        
+
         // try {
         // Initialize the Google API client with OAuth 2.0 credentials
         $client = new Google_Client();
@@ -226,7 +231,7 @@ class GoogleCalendarController extends Controller
             $data->encrypted_password = $classpassword;
 
             $res = $data->save();
-            
+
             if ($res) {
                 // Retrieve the id after saving
                 $lastInsertedId = $data->id;
@@ -326,7 +331,7 @@ class GoogleCalendarController extends Controller
         $authUrl = $client->createAuthUrl();
         return redirect()->away($authUrl);
     }
-    
+
     $client->setAccessToken($request->session()->get('access_token'));
     $service = new Google_Service_Calendar($client);
 

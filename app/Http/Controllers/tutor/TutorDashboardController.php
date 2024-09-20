@@ -13,6 +13,7 @@ use App\Models\studentprofile;
 use Illuminate\Http\Request;
 use App\Models\zoom_classes;
 use App\Models\Notification;
+use App\Models\SlotBooking;
 use App\Models\OnlineTests;
 use Illuminate\Support\Carbon;
 use App\Models\payments\paymentdetails;
@@ -81,23 +82,28 @@ class TutorDashboardController extends Controller
         // ->orderBy('zoom_classes.start_time', 'asc')
         // ->take(5)
         // ->get();
-        $upcomingClasses = zoom_classes::select('zoom_classes.*', 'zoom_classes.id as liveclass_id', 'studentregistrations.name as studentname', 'subjects.name as subject', 'classes.name as classname', 'slot_bookings.date as slotdate', 'slot_bookings.slot as slottime')
-            ->join('slot_bookings', 'slot_bookings.meeting_id', 'zoom_classes.id')
-            ->join('studentregistrations', 'studentregistrations.id', 'slot_bookings.student_id')
-            ->join('paymentstudents', 'paymentstudents.id', 'slot_bookings.class_schedule_id')
-            ->join('subjects', 'subjects.id', 'paymentstudents.subject_id')
-            ->join('classes', 'classes.id', 'paymentstudents.class_id')
-            ->where('zoom_classes.is_completed', 0)
-            ->where('zoom_classes.is_active', 1)
-            ->where('zoom_classes.tutor_id', session('userid')->id)
-            // ->where('zoom_classes.start_time','>=',Carbon::now())
-            ->orderby('zoom_classes.created_at', 'desc')
-            ->get();
+        // $upcomingClasses = zoom_classes::select('zoom_classes.*', 'zoom_classes.id as liveclass_id', 'studentregistrations.name as studentname', 'subjects.name as subject', 'classes.name as classname', 'slot_bookings.date as slotdate', 'slot_bookings.slot as slottime')
+        //     ->join('slot_bookings', 'slot_bookings.meeting_id', 'zoom_classes.id')
+        //     ->join('studentregistrations', 'studentregistrations.id', 'slot_bookings.student_id')
+        //     ->join('paymentstudents', 'paymentstudents.id', 'slot_bookings.class_schedule_id')
+        //     ->join('subjects', 'subjects.id', 'paymentstudents.subject_id')
+        //     ->join('classes', 'classes.id', 'paymentstudents.class_id')
+        //     ->where('zoom_classes.is_completed', 0)
+        //     ->where('zoom_classes.is_active', 1)
+        //     ->where('zoom_classes.tutor_id', session('userid')->id)
+        //     // ->where('zoom_classes.start_time','>=',Carbon::now())
+        //     ->orderby('zoom_classes.created_at', 'desc')
+        //     ->get();
 
-        $upcomingClasses->transform(function ($class) {
-            $class->start_time = Carbon::parse($class->start_time);
-            return $class;
-        });
+        $upcomingClasses = SlotBooking::select('slot_bookings.*','studentregistrations.name as student_name')
+        ->join('studentregistrations','studentregistrations.id','slot_bookings.student_id')
+        ->where('slot_bookings.tutor_id',session('userid')->id)
+        ->orderby('slot_bookings.date', 'desc')
+        ->get(10);
+        // $upcomingClasses->transform(function ($class) {
+        //     $class->start_time = Carbon::parse($class->start_time);
+        //     return $class;
+        // });
 
 
 
@@ -162,7 +168,7 @@ class TutorDashboardController extends Controller
         ->orderBy('democlasses.created_at', 'desc')
         ->take(5)
         ->get();
-        
+
 
     $upcoming_demos->transform(function ($demos) {
         $demos->slot_confirmed = Carbon::parse($demos->slot_confirmed);
