@@ -86,7 +86,7 @@
                                     <label for="file" id="uploadBtn"><span class="ri-camera-line">&nbsp;Choose Photo</span></label>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-6 col-12">
                                 <h2 style="margin-top: 60px; color: black; padding-left: 30px;">
                                     {{ $tutorpd->name ?? session('userid')->name }}</h2>
@@ -188,10 +188,22 @@
                             </div> --}}
                             {{-- Added new field for rate per hour based on profile starts here --}}
                             <div class="form-group col-md-6">
-                                <label for="name">Rate Per Hour(£)<i style="color:red">*</i></label>
+                                <label for="name">Rate Per Hour(£)<i style="color:red"> (for 1-4 classes)</i></label>
                                 <input type="text" class="form-control" id="rateperhour" name="rateperhour"
                                     placeholder="0" disabled readonly
                                     value="{{ $tutorpd->rateperhour ?? 0}}" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="name">Rate Per Hour(£)<i style="color:red"> (for 5-9 classes)</i></label>
+                                <input type="text" class="form-control" id="rateperhour2" name="rateperhour2"
+                                    placeholder="0" disabled readonly
+                                    value="{{ $tutorpd->rateperhour2 ?? 0}}" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="name">Rate Per Hour(£)<i style="color:red"> (for more than 9 classes)</i></label>
+                                <input type="text" class="form-control" id="rateperhour3" name="rateperhour3"
+                                    placeholder="0" disabled readonly
+                                    value="{{ $tutorpd->rateperhour3 ?? 0}}" required>
                             </div>
                             {{-- Added new field for rate per hour based on profile ends here --}}
 
@@ -202,7 +214,27 @@
                                     value="{{ $tutorpd->intro_video_link ?? ''}}">
                             </div>
 
-                           
+                            @if ($tutorpd->document_link_1)
+                            <div class="form-group col-md-4 mt-3">
+                                <label for="name">Document 1 </label>
+                               <a href="{{$tutorpd->document_link_1}}" target="_blank"> <button class="btn btn-sm btn-primary" type="button">View</button></a>
+                            </div>
+                            @endif
+                            @if ($tutorpd->document_link_2)
+                            <div class="form-group col-md-4 mt-3">
+                                <label for="name">Document 2 </label>
+                               <a href="{{$tutorpd->document_link_2}}" target="_blank"> <button class="btn btn-sm btn-primary" type="button">View</button></a>
+                            </div>
+                            @endif
+                            @if ($tutorpd->document_link_3)
+                            <div class="form-group col-md-4 mt-3">
+                                <label for="name">Document 3 </label>
+                               <a href="{{$tutorpd->document_link_3}}" target="_blank"> <button class="btn btn-sm btn-primary" type="button">View</button></a>
+                            </div>
+                            @endif
+
+
+
 
                         </div>
                         <div class="row">
@@ -325,9 +357,9 @@
                 </form> --}}
                 {{-- <hr> --}}
 
-                
 
-               
+
+
 
 
 
@@ -354,7 +386,7 @@
       </div>
     </div>
   </div>
-  
+
     </div>
     <!-- content-wrapper ends -->
 
@@ -503,7 +535,7 @@ function fetchSubjects() {
 </script>
 <script>
     function validateImage() {
-       
+
     const fileInput = document.getElementById('file');
     const filePath = fileInput.value;
     const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
@@ -513,14 +545,14 @@ function fetchSubjects() {
 
     // Reset previous error message
     errorElement.textContent = '';
-       
+
     // Check file extension
     if (!allowedExtensions.exec(filePath)) {
         errorElement.textContent = 'Only .jpg, .jpeg, and .png files are allowed';
         fileInput.value = '';
         return false;
     }
-   
+
     // Check file size
     if (file.size > maxSize) {
         errorElement.textContent = 'File size must not exceed 2MB';
@@ -541,7 +573,7 @@ function fetchSubjects() {
     // Loop through each form
     forms.forEach(form => {
         const inputs = form.querySelectorAll('input, select, textarea');
-        
+
         // Attach 'input' event listeners to each form's inputs
         inputs.forEach(input => {
             input.addEventListener('input', () => {

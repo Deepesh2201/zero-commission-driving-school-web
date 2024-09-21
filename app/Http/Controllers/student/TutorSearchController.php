@@ -193,7 +193,9 @@ class TutorSearchController extends Controller
             'tutorprofiles.*',
             'subjects.id as subjectid',
             'subjects.name as subject',
-            \DB::raw('(tutorprofiles.rateperhour * tutorprofiles.admin_commission / 100) + tutorprofiles.rateperhour as rate')
+            \DB::raw('(tutorprofiles.rateperhour * tutorprofiles.admin_commission / 100) + tutorprofiles.rateperhour as rate'),
+            \DB::raw('(tutorprofiles.rateperhour2 * tutorprofiles.admin_commission / 100) + tutorprofiles.rateperhour2 as rate2'),
+            \DB::raw('(tutorprofiles.rateperhour3 * tutorprofiles.admin_commission / 100) + tutorprofiles.rateperhour3 as rate3')
         )
             ->leftJoin('tutorsubjectmappings', 'tutorsubjectmappings.tutor_id', '=', 'tutorprofiles.tutor_id')
             ->leftJoin('teacherclassmappings', 'teacherclassmappings.subject_mapping_id', '=', 'tutorsubjectmappings.id')
@@ -639,6 +641,8 @@ class TutorSearchController extends Controller
             'tutorregistrations.email as tutor_email',
             'tutorregistrations.is_active as tutor_status',
             'tutorprofiles.rateperhour as rate',
+            'tutorprofiles.rateperhour2 as rate2',
+            'tutorprofiles.rateperhour3 as rate3',
             'tutorprofiles.admin_commission as admin_commission',
             'tutorprofiles.id as rate_id'
         )
@@ -653,6 +657,8 @@ class TutorSearchController extends Controller
                 'tutorregistrations.email',
                 'tutorregistrations.is_active',
                 'tutorprofiles.rateperhour',
+                'tutorprofiles.rateperhour2',
+                'tutorprofiles.rateperhour3',
                 'tutorprofiles.admin_commission',
                 'tutorprofiles.id'
             )
@@ -897,7 +903,16 @@ class TutorSearchController extends Controller
 
         $data = TutorProfile::where('tutor_id', $request->id)->first();
         // dd($data);
-        $data->rateperhour = $request->rate;
+        if($request->ratecode == 'rateperhour'){
+            $data->rateperhour = $request->rate;
+        }
+        if($request->ratecode == 'rateperhour2'){
+            $data->rateperhour2 = $request->rate;
+        }
+        if($request->ratecode == 'rateperhour3'){
+            $data->rateperhour3 = $request->rate;
+        }
+
         $res = $data->save();
         return json_encode(array('statusCode' => 200));
     }
@@ -931,7 +946,7 @@ class TutorSearchController extends Controller
     public function enrollnow($id)
     {
         $currentDate = Carbon::now()->toDateString();
-        $enrollment = TutorSubjectMapping::select('tutorsubjectmappings.*', 'subjects.name as subject_name', 'tutorprofiles.name as tutor_name', \DB::raw('(tutorprofiles.rateperhour * tutorprofiles.admin_commission / 100) + tutorprofiles.rateperhour as rate'))
+        $enrollment = TutorSubjectMapping::select('tutorsubjectmappings.*', 'subjects.name as subject_name', 'tutorprofiles.name as tutor_name', \DB::raw('(tutorprofiles.rateperhour * tutorprofiles.admin_commission / 100) + tutorprofiles.rateperhour as rate'), \DB::raw('(tutorprofiles.rateperhour2 * tutorprofiles.admin_commission / 100) + tutorprofiles.rateperhour2 as rate2'), \DB::raw('(tutorprofiles.rateperhour3 * tutorprofiles.admin_commission / 100) + tutorprofiles.rateperhour3 as rate3'))
             ->join('tutorprofiles', 'tutorprofiles.tutor_id', '=', 'tutorsubjectmappings.tutor_id')
             ->join('subjects', 'subjects.id', '=', 'tutorsubjectmappings.subject_id')
             ->where('tutorprofiles.tutor_id', $id)

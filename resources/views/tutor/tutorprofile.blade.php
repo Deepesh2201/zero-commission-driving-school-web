@@ -41,14 +41,22 @@
                                                 <h3>{{$tutorpd->name}} <i class="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h3>
                                                 <h5>{{$tutorpd->subject}}</h5>
                                             </div>
-                                            <div class="tu-listinginfo_price"> 
-                                                <span>Starting from:</span>
+                                            <div class="tu-listinginfo_price">
+                                                <span>Upto 4 classes</span>
                                                 <h4>£{{ ((float)$tutorpd->rateperhour * (float)$tutorpd->admin_commission / 100)+$tutorpd->rateperhour }}/hr</h4>
+                                            </div>
+                                            <div class="tu-listinginfo_price">
+                                                <span>5-9 classes</span>
+                                                <h4>£{{ ((float)$tutorpd->rateperhour2 * (float)$tutorpd->admin_commission / 100)+$tutorpd->rateperhour2 }}/hr</h4>
+                                            </div>
+                                            <div class="tu-listinginfo_price">
+                                                <span>more than 9 classes</span>
+                                                <h4>£{{ ((float)$tutorpd->rateperhour3 * (float)$tutorpd->admin_commission / 100)+$tutorpd->rateperhour3 }}/hr</h4>
                                             </div>
                                         </div>
                                         <ul class="tu-tutorreview">
                                             @isset($reviews)
-                                                
+
                                             <li>
                                                 <span><em>({{count($reviews)}})</em> Reviews</span>
                                             </li>
@@ -59,15 +67,15 @@
                                             <li>
                                                 <span><i class="fa fa-check-circle tu-colorgreen"><em>Experience:</em></i><em>{{$tutorpd->experience}}</em></span>
                                             </li>
-                                        </ul>	
-                                        <div class="tu-detailitem">
+                                        </ul>
+                                        {{-- <div class="tu-detailitem">
                                             <h6>Certifications</h6>
                                             <div class="tu-languagelist">
                                                 <ul class="tu-languages">
                                                     <li>{{$tutorpd->certification}}</li>
                                                      </ul>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +85,7 @@
                                     <a href="{{$tutorpd->intro_video_link}}" target="_blank" style="margin-left: 10px; margin-bottom:10px"><button class="btn btn-sm btn-primary">Watch Intro</button></a>
                                     <a href="profileupdate" style="margin-left: 10px; margin-bottom:10px"><button class="btn btn-sm btn-success">Update Profile</button></a>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="tu-detailstabs">
@@ -116,15 +124,15 @@
                                         <div class="tu-description">
                                             <p> {{$tutorpd->experience}}</p>
                                         </div>
-                                       
-                                        
+
+
                                     </div>
-                                   
+
                                     <div class="tu-tabswrapper">
                                         <div class="tu-tabstitle">
                                             <h4>Achievement</h4>
                                         </div>
-                                        <ul class="tu-icanteach">  
+                                        <ul class="tu-icanteach">
                                             <li>
                                                 {{-- <div class="tu-tech-title">
                                                     <h6>Class 9 - 10</h6>
@@ -136,30 +144,30 @@
                                                 <a href="#achievement">{{ $achievement->description }}</a>
                                             </li>
                                             @endforeach
-                                                    
+
                                                 </ul>
                                             </li>
-                                           
+
                                         </ul>
                                     </div>
-                                   
+
                                 </div>
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div class="tu-tabswrapper">
                                         <div class="tu-boxtitle">
                                             @isset($reviews)
-                                                
+
                                             <h4>Reviews ({{count($reviews)}})</h4>
                                             @endisset
                                         </div>
                                         @isset($reviews)
-                                            
-                                       
+
+
                                         @foreach ($reviews as $reviews)
-                                        
-                                    
+
+
                                     </tr>
-                                   
+
                                         <div class="tu-commentarea">
                                             <div class="tu-commentlist">
                                                 <figure>
@@ -181,12 +189,12 @@
                                                         <p>{{$reviews->name}} </div>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                         @endforeach
                                         @endisset
                                     </div>
-                                  
+
                                 </div>
                             </div>
                         </div>
@@ -202,13 +210,13 @@
                                 <a href="/tutor/register" class="tu-yellowbtn">Join our community</a>
                             </div>
                         </div>
-                       
+
                     </div>
-                   
+
                 </div>
             </div>
 
-           
+
 
         </div>
         <!-- content-wrapper ends -->

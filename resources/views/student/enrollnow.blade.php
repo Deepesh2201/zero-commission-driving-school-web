@@ -41,9 +41,19 @@
                         <span class="text-danger">@error('subjectenrollid') {{ $message }} @enderror</span>
                     </div>
                     <div class="col-md-2 mt-4">
-                        <label for="">Rate/Hr(£)</label>
+                        <label for="">Rate/Hr(£)(upto 4 classes)</label>
                         <input type="text" class="form-control readonly" name="rateperhourenroll" id="rateperhourenroll" readonly value="{{ $enrollment->rate }}">
                         <span class="text-danger">@error('rateperhourenroll') {{ $message }} @enderror</span>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <label for="">Rate/Hr(£)(for 5-9 classes)</label>
+                        <input type="text" class="form-control readonly" name="rateperhourenroll2" id="rateperhourenroll2" readonly value="{{ $enrollment->rate2 }}">
+                        <span class="text-danger">@error('rateperhourenroll2') {{ $message }} @enderror</span>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <label for="">Rate/Hr(£)(more than 9 classes)</label>
+                        <input type="text" class="form-control readonly" name="rateperhourenroll3" id="rateperhourenroll3" readonly value="{{ $enrollment->rate3 }}">
+                        <span class="text-danger">@error('rateperhourenroll3') {{ $message }} @enderror</span>
                     </div>
 
                         <input type="number" class="form-control" name="requiredclassenroll" id="requiredclassenroll" hidden required>
@@ -102,35 +112,54 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            var selectedSlots = [];
+    var selectedSlots = [];
 
-            $('.slot-btn').on('click', function () {
-                var $button = $(this);
-                var date = $button.data('date');
-                var time = $button.data('time');
-                var slotId = $button.data('slot-id');
+    $('.slot-btn').on('click', function () {
+        var $button = $(this);
+        var date = $button.data('date');
+        var time = $button.data('time');
+        var slotId = $button.data('slot-id');
 
-                // Toggle slot selection
-                if (!$button.hasClass('selected')) {
-                    selectedSlots.push({ date: date, time: time, slotId: slotId });
-                    $button.addClass('selected').removeClass('btn-success').addClass('btn-primary');
-                } else {
-                    selectedSlots = selectedSlots.filter(slot => !(slot.date === date && slot.time === time && slot.slotId === slotId));
-                    $button.removeClass('selected').removeClass('btn-primary').addClass('btn-success');
-                }
+        // Toggle slot selection
+        if (!$button.hasClass('selected')) {
+            selectedSlots.push({ date: date, time: time, slotId: slotId });
+            $button.addClass('selected').removeClass('btn-success').addClass('btn-primary');
+        } else {
+            selectedSlots = selectedSlots.filter(slot => !(slot.date === date && slot.time === time && slot.slotId === slotId));
+            $button.removeClass('selected').removeClass('btn-primary').addClass('btn-success');
+        }
 
-                // Update required classes and total amount
-                updateRequiredClassesAndTotal();
-            });
+        // Update required classes and total amount
+        updateRequiredClassesAndTotal();
+    });
 
-            function updateRequiredClassesAndTotal() {
-                var requiredClasses = selectedSlots.length;
-                $('#requiredclassenroll').val(requiredClasses); // Update hidden input
-                var ratePerHour = parseFloat($('#rateperhourenroll').val());
-                var totalAmount = requiredClasses * ratePerHour;
-                $('#totalamountenroll').val(totalAmount.toFixed(2)); // Format to 2 decimal places
-                $('#slotids').val(selectedSlots.map(slot => slot.slotId).join(','));
-            }
-        });
+    function updateRequiredClassesAndTotal() {
+        var requiredClasses = selectedSlots.length;
+        $('#requiredclassenroll').val(requiredClasses); // Update hidden input
+
+        // Get the rates from the input fields
+        var rate1 = parseFloat($('#rateperhourenroll').val());
+        var rate2 = parseFloat($('#rateperhourenroll2').val());
+        var rate3 = parseFloat($('#rateperhourenroll3').val());
+
+        var totalAmount = 0;
+
+        // Apply rates based on the number of classes
+        if (requiredClasses >= 1 && requiredClasses <= 4) {
+            totalAmount = requiredClasses * rate1;
+        } else if (requiredClasses >= 5 && requiredClasses <= 9) {
+            totalAmount = requiredClasses * rate2;
+        } else if (requiredClasses > 9) {
+            totalAmount = requiredClasses * rate3;
+        }
+
+        // Update total amount in the input field
+        $('#totalamountenroll').val(totalAmount.toFixed(2)); // Format to 2 decimal places
+
+        // Store selected slot IDs
+        $('#slotids').val(selectedSlots.map(slot => slot.slotId).join(','));
+    }
+});
+
     </script>
 @endsection

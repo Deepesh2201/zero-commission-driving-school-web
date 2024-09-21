@@ -85,7 +85,9 @@
                                 <th scope="col">S.No</th>
                                 <th scope="col">Tutor Name</th>
                                 <th scope="col">Tutor Mobile</th>
-                                <th scope="col">Rate/Hr (£)</th>
+                                <th scope="col">Rate/Hr (£)(upto 4 classes)</th>
+                                <th scope="col">Rate/Hr (£)(5-9 classes)</th>
+                                <th scope="col">Rate/Hr (£)(more than 9 classes)</th>
                                 <th scope="col">Commission/Hr</th>
                                 <th scope="col">Check Slots</th>
                                 <th scope="col">Current Status</th>
@@ -106,9 +108,17 @@
                                     <td>{{ $ttrlist->tutor_mobile }}</td>
                                     {{-- <td>£ {{ $ttrlist->rate }}</td> --}}
                                     <td><a href="#"
-                                            onclick="updaterate('{{ $ttrlist->tutor_id }}','{{ $ttrlist->rate }}')">
+                                            onclick="updaterate('{{ $ttrlist->tutor_id }}','{{ $ttrlist->rate }}','rateperhour')">
                                             {{ $ttrlist->rate }} <span class="badge bg-primary ml-3"> Update</span> </a>
                                     </td>
+                                    <td><a href="#"
+                                        onclick="updaterate('{{ $ttrlist->tutor_id }}','{{ $ttrlist->rate2 }}','rateperhour2')">
+                                        {{ $ttrlist->rate2 }} <span class="badge bg-primary ml-3"> Update</span> </a>
+                                </td>
+                                <td><a href="#"
+                                    onclick="updaterate('{{ $ttrlist->tutor_id }}','{{ $ttrlist->rate3 }}','rateperhour3')">
+                                    {{ $ttrlist->rate3 }} <span class="badge bg-primary ml-3"> Update</span> </a>
+                            </td>
                                     <td><a href="#"
                                             onclick="updatecommission('{{ $ttrlist->tutor_id }}','{{ $ttrlist->admin_commission }}')">
                                             {{ $ttrlist->admin_commission }}% <span class="badge bg-primary ml-3">
@@ -205,6 +215,7 @@
                 @csrf --}}
                     <div class="row mb-3">
                         <input type="hidden" id="rateid" name="rateid">
+                        <input type="hidden" id="ratecode" name="ratecode">
 
                         <div class="col-12 col-md-4 col-ms-12">
                             <label>Rate/Hr<i style="color: red;">*</i></label>
@@ -269,8 +280,9 @@
             $('#admincommissionmodal').modal('hide')
         }
 
-        function updaterate(id, rate) {
+        function updaterate(id, rate, ratecode) {
             $('#rateid').val(id);
+            $('#ratecode').val(ratecode);
             $('#rateperhour').val(rate);
             $('#adminratemodal').modal('show')
         }
@@ -306,6 +318,7 @@
         function rateupdate() {
             var url = "{{ URL('admin/rate/update') }}";
             var id = $('#rateid').val()
+            var ratecode = $('#ratecode').val()
             var rate = $('#rateperhour').val()
             $.ajax({
                 url: url,
@@ -314,6 +327,7 @@
                 data: {
                     _token: '{{ csrf_token() }}',
                     id: id,
+                    ratecode:ratecode,
                     rate: rate
                 },
                 success: function(dataResult) {
