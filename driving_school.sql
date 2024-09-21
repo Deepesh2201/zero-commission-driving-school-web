@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 21, 2024 at 07:46 AM
+-- Generation Time: Sep 21, 2024 at 05:22 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -1113,7 +1113,37 @@ INSERT INTO `slot_bookings` (`id`, `date`, `slot`, `status`, `student_id`, `book
 (322, '2024-09-24', '11:00:00', 0, NULL, NULL, 20, NULL, '2024-09-20 12:08:03', '2024-09-20 12:08:03', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (323, '2024-09-25', '11:00:00', 0, NULL, NULL, 20, NULL, '2024-09-20 12:08:03', '2024-09-20 12:08:03', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (324, '2024-09-26', '11:00:00', 0, NULL, NULL, 20, NULL, '2024-09-20 12:08:03', '2024-09-20 12:08:03', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(325, '2024-09-27', '11:00:00', 0, NULL, NULL, 20, NULL, '2024-09-20 12:08:03', '2024-09-20 12:08:03', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(325, '2024-09-27', '11:00:00', 0, NULL, NULL, 20, NULL, '2024-09-20 12:08:03', '2024-09-20 12:08:03', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(326, '2024-09-22', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:33', '2024-09-21 09:14:33', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(327, '2024-09-23', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:33', '2024-09-21 09:14:33', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(328, '2024-09-24', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:33', '2024-09-21 09:14:33', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(329, '2024-09-25', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:33', '2024-09-21 09:14:33', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(330, '2024-09-26', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:33', '2024-09-21 09:14:33', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(331, '2024-09-27', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:33', '2024-09-21 09:14:33', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(332, '2024-09-28', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:33', '2024-09-21 09:14:33', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(333, '2024-09-29', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:33', '2024-09-21 09:14:33', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(334, '2024-09-30', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:33', '2024-09-21 09:14:33', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(335, '2024-10-01', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:33', '2024-09-21 09:14:33', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(336, '2024-10-02', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:33', '2024-09-21 09:14:33', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(337, '2024-10-03', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(338, '2024-10-04', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(339, '2024-10-05', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(340, '2024-10-06', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(341, '2024-10-07', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(342, '2024-10-08', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(343, '2024-10-09', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(344, '2024-10-10', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(345, '2024-10-11', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(346, '2024-10-12', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(347, '2024-10-13', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(348, '2024-10-14', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(349, '2024-10-15', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(350, '2024-10-16', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(351, '2024-10-17', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(352, '2024-10-18', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(353, '2024-10-19', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(354, '2024-10-20', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(355, '2024-10-21', '13:00:00', 0, NULL, NULL, 20, NULL, '2024-09-21 09:14:34', '2024-09-21 09:14:34', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1794,6 +1824,9 @@ CREATE TABLE `tutorprofiles` (
   `goal` varchar(255) DEFAULT NULL,
   `qualification` varchar(255) NOT NULL,
   `intro_video_link` varchar(255) DEFAULT NULL,
+  `document_link_1` text DEFAULT NULL COMMENT 'upload document to gdrive and paste link here',
+  `document_link_2` text DEFAULT NULL,
+  `document_link_3` text DEFAULT NULL,
   `profile_pic` varchar(255) DEFAULT NULL,
   `expertise` varchar(255) DEFAULT NULL,
   `experience` varchar(255) DEFAULT NULL,
@@ -1808,7 +1841,9 @@ CREATE TABLE `tutorprofiles` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `country_id` int(11) DEFAULT 0,
   `gender` int(11) DEFAULT 1,
-  `rateperhour` varchar(256) NOT NULL,
+  `rateperhour` varchar(256) NOT NULL COMMENT 'rate for no. of classes less than 5',
+  `rateperhour2` varchar(256) DEFAULT '0' COMMENT 'rate for 5-9 classes',
+  `rateperhour3` varchar(255) DEFAULT '0' COMMENT 'rate for more tha 10 classes',
   `admin_commission` decimal(8,2) DEFAULT NULL,
   `rate` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1817,8 +1852,8 @@ CREATE TABLE `tutorprofiles` (
 -- Dumping data for table `tutorprofiles`
 --
 
-INSERT INTO `tutorprofiles` (`id`, `name`, `mobile`, `secondary_mobile`, `email`, `goal`, `qualification`, `intro_video_link`, `profile_pic`, `expertise`, `experience`, `certification`, `headline`, `detail_1`, `detail_2`, `detail_3`, `tutor_id`, `keywords`, `created_at`, `updated_at`, `country_id`, `gender`, `rateperhour`, `admin_commission`, `rate`) VALUES
-(12, 'Jenni', 7004920897, NULL, 'instructor@demo.com', NULL, 'Test', NULL, '1726759309.png', NULL, 'Test Exp', NULL, NULL, NULL, NULL, NULL, 20, NULL, '2024-09-19 09:50:13', '2024-09-19 10:14:53', 0, 2, '100', 0.00, NULL);
+INSERT INTO `tutorprofiles` (`id`, `name`, `mobile`, `secondary_mobile`, `email`, `goal`, `qualification`, `intro_video_link`, `document_link_1`, `document_link_2`, `document_link_3`, `profile_pic`, `expertise`, `experience`, `certification`, `headline`, `detail_1`, `detail_2`, `detail_3`, `tutor_id`, `keywords`, `created_at`, `updated_at`, `country_id`, `gender`, `rateperhour`, `rateperhour2`, `rateperhour3`, `admin_commission`, `rate`) VALUES
+(12, 'Jenni', 7004920897, NULL, 'instructor@demo.com', NULL, 'Test', NULL, 'https://www.google.com/', NULL, NULL, '1726759309.png', NULL, 'Test Exp', NULL, NULL, NULL, NULL, NULL, 20, NULL, '2024-09-19 09:50:13', '2024-09-21 09:05:51', 0, 2, '100', '90', '80', 0.00, NULL);
 
 -- --------------------------------------------------------
 
@@ -2572,7 +2607,7 @@ ALTER TABLE `questionbanks`
 -- AUTO_INCREMENT for table `slot_bookings`
 --
 ALTER TABLE `slot_bookings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=326;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=356;
 
 --
 -- AUTO_INCREMENT for table `statuses`
