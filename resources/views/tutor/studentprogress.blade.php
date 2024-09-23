@@ -19,154 +19,51 @@
                 @if (Session::has('fail'))
                     <div class="alert alert-danger">{{ Session::get('fail') }}</div>
                 @endif
-                @if (count($students) > 0)
-                <h3 class="text-center">Students</h3>
+
+                <h3 class="text-center">{{$studentdata->name}}'s Progress</h3>
                 <div class="mt-4" id="">
 
-                    <div class="table-responsive">
-                            <table class="table table-hover table-striped align-middlemb-0">
-
-                                <thead>
-                                    <tr>
-                                        <th scope="col">S.No.</th>
-                                        <th scope="col">Student</th>
-                                        <th scope="col">Registration</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($students as $student)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-
-                                            <td>{{ $student->studentname }}</td>
-                                            <td>DS121-2024{{ $loop->iteration }}</td>
-                                            <td>
-                                               <a href="/tutor/studentprogress/{{$student->studentid}}"> <button
-                                                    class="btn btn-sm btn-primary">View Progress</button></a>
-                                                <button
-                                                        class="btn btn-sm btn-primary" onclick="theorymodal({{$student->studentid}})">Theory</button>
-                                                <button type="button"
-                                                            class="btn btn-sm btn-primary" onclick="showpayments({{$student->studentid}})">Payments</button>
-                                                <form action="{{ route('tutor.slots.search') }}" method="GET" style="display:inline;">
-                                                    @csrf
-                                                    <input type="hidden" value="{{ $student->studentid }}" id="selectstudent" name="selectstudent">
-                                                    <button type="submit" class="btn btn-sm btn-primary">View Slots</button>
-                                                </form>
-                                                <a href="studentmessages/{{ $student->studentid }}"><button
-                                                            class="btn btn-sm btn-success">Start Chat</button></a>
-
-                                            </td>
-                                        </tr>
-                                    @endforeach
-
-                                </tbody>
-                            </table>
-                            <div class="d-flex justify-content-center">
-                                {{-- {!! $demos->links() !!} --}}
-                            </div>
+                    <form action="{{ route('tutor.savestudentprogress') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="studentid" value="{{ $studentdata->id }}">
+                        <div class="mt-4" id="skill-list">
+                            @foreach ($skilllists->groupBy('skill_type') as $skillType => $skills)
+                                <h3>{{ $skillType }}</h3>
+                                @foreach ($skills as $skill)
+                                    <div class="skill-item" style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                        <!-- Skill ID -->
+                                        <input type="hidden" name="skills[{{ $loop->parent->index }}][skillid]" value="{{ $skill->id }}">
+                                        <div class="skill-name">{{ $skill->skill_name }}</div>
+                                        <!-- Skill Status -->
+                                        <div class="skill-status">
+                                            <select name="skills[{{ $loop->parent->index }}][status]" class="form-control">
+                                                <option value="" disabled selected>Select status</option>
+                                                @foreach ($skillstatuses as $skillstatus)
+                                                    <option value="{{ $skillstatus->id }}">{{ $skillstatus->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <!-- Skill Rating -->
+                                        <div class="skill-rating">
+                                            <input type="number" name="skills[{{ $loop->parent->index }}][rating]" class="form-control" placeholder="Ratings" min="0" max="5" />
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endforeach
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save All</button>
+                    </form>
 
 
-                    </div>
+
+
+
+
+
                 </div>
-                @else
-                            <div style="display: flex; justify-content:center">
 
-                                <img src="{{ asset('images/no-data-found.jpg') }}" width="400px">
-                            </div>
-                        @endif
             </div>
             <!-- content-wrapper ends -->
-
-
-            <div class="modal fade" id="studentpayments" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-xl"> <!-- Change to modal-lg for smaller width -->
-        <div class="modal-content">
-            <div class="modal-body">
-                <header>
-                    <h3 class="text-center mb-4">Payment List</h3>
-                </header>
-
-                <form action="" method="">
-                    <div class="row">
-                        <div class="col-12 col-md-12 col-ms-12 mb-3">
-                            <style>
-                                .newclass td,
-                                .newclass th {
-                                    padding: 2px !important;
-                                }
-                            </style>
-                            <table class="table table-bordered newclass" style="margin: 0%;">
-                                <thead>
-                                    <tr>
-                                        <th>S.No</th>
-                                        <th>Transaction No.</th>
-                                        <th>Date</th>
-                                        <th>Amount(£)</th>
-                                        <th>Payment Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="paymentlist">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- Theory Modal --}}
-<div class="modal fade" id="theorymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-body">
-                <header>
-                    <h3 class="text-center mb-4">Update Theory Details</h3>
-                </header>
-
-                <form action="updatetheory" method="POST">
-                    @csrf
-                    <input type="hidden" id="studentid" name="studentid">
-                    <div class="row">
-
-                        <div class="col-12 col-md-12 col-ms-6 mb-3">
-                            <label>Location<span style="color:red">*</span></label>
-                            <input type="text" class="form-control" id="location" name="location" placeholder="enter location" required>
-                        </div>
-                        <div class="col-12 col-md-12 col-ms-6 mb-3">
-                            <label>Date<span style="color:red">*</span></label>
-                            <input type="date" class="form-control" id="date" name="date" placeholder="select date" required>
-                        </div>
-                        <div class="col-12 col-md-12 col-ms-6 mb-3">
-                            <label>Marks<span style="color:red">*</span></label>
-                            <input type="number" class="form-control" id="marks" name="marks" placeholder="enter marks" required>
-                        </div>
-                        <div class="col-12 col-md-12 col-ms-6 mb-3">
-                            <label>Description<span style="color:red">*</span></label>
-                            <textarea type="text" class="form-control" id="description" name="description" placeholder="enter description" required></textarea>
-                        </div>
-
-
-
-                    </div>
-
-                    <div style="float:right">
-
-                        <button type="submit" id="" class="btn btn-sm btn-success "><span
-                                class="fa fa-check"></span>
-                            Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 
 

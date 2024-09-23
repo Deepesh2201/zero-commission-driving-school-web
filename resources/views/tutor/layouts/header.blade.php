@@ -30,7 +30,7 @@
     <link rel="stylesheet"
         href="{{ url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> --}}
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
 </head>

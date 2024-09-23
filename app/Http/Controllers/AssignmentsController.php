@@ -6,7 +6,11 @@ use App\Models\StudentAssignmentList;
 use App\Models\StudentAssignments;
 use App\Models\classes;
 use App\Models\subjects;
+use App\Models\SkillStatus;
+use App\Models\SkillList;
+use App\Models\SkillListMapping;
 use App\Models\topics;
+use App\Models\StudentTheory;
 use App\Models\tutorregistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -392,4 +396,109 @@ class AssignmentsController extends Controller
             return back()->with('fail', 'Something went wrong, please try again later');
         }
     }
+
+    public function gettheory($id){
+        $data = StudentTheory::select('*')->where('student_id',$id)->where('tutor_id',session('userid')->id)->first();
+
+        return response()->json($data);
+    }
+
+    public function updatetheory(Request $request){
+
+        $request->validate([
+            'studentid' => 'required',
+            'location' => 'required',
+            'date' => 'required',
+            'marks' => 'required',
+            'description' => 'required',
+        ]);
+
+        $chk = StudentTheory::select('*')->where('student_id',$request->studentid)->where('tutor_id',session('userid')->id)->first();
+
+        if($chk){
+            $data = StudentTheory::find($chk->id);
+            $data->location = $request->location;
+            $data->date = $request->date;
+            $data->marks = $request->marks;
+            $data->description = $request->description;
+
+            $res = $data->update();
+
+            if($res){
+                return redirect()->route('tutor.studentslist')->with('success', 'Theory updated successfully.');
+            }
+            else{
+                return redirect()->route('tutor.studentslist')->with('fail','Something went wrong. Failed to update theory.');
+            }
+        }
+        else{
+            $data = new StudentTheory();
+            $data->student_id = $request->studentid;
+            $data->tutor_id = session('userid')->id;
+            $data->location = $request->location;
+            $data->date = $request->date;
+            $data->marks = $request->marks;
+            $data->description = $request->description;
+
+            $res = $data->save();
+
+            if($res){
+                return redirect()->route('tutor.studentslist')->with('success', 'Theory updated successfully.');
+            }
+            else{
+                return redirect()->route('tutor.studentslist')->with('fail','Something went wrong. Failed to update theory.');
+            }
+        }
+    }
+
+    public function studentprogress($id){
+        $studentdata = studentregistration::select('*')->where('id',$id)->first();
+        $skillstatuses = SkillStatus::select('*')->get();
+        $skilllists = SkillList::select('*')->get();
+        return view('tutor.studentprogress',compact('studentdata','skillstatuses','skilllists'));
+    }
+
+
+
+    public function savestudentprogress(Request $request)
+{
+    $studentId = $request->input('studentid');
+    $tutorId = auth()->id(); // Assuming you're using the auth system for the tutor's ID
+    $skillsData = $request->input('skills');
+
+    foreach ($skillsData as $skill) {
+        if (isset($skill['skillid'], $skill['status'], $skill['rating'])) {
+            $skillId = $skill['skillid'];
+            $statusId = $skill['status'];
+            $rating = $skill['rating'];
+
+            // Check if the mapping already exists
+            $mapping = SkillListMapping::where('student_id', $studentId)
+                ->where('tutor_id', $tutorId)
+                ->where('skill_id', $skillId)
+                ->first();
+
+            if ($mapping) {
+                // Update existing mapping
+                $mapping->skill_status_id = $statusId;
+                $mapping->skill_rating = $rating;
+                $mapping->save();
+            } else {
+                // Create new mapping
+                SkillListMapping::create([
+                    'student_id' => $studentId,
+                    'tutor_id' => $tutorId,
+                    'skill_id' => $skillId,
+                    'skill_status_id' => $statusId,
+                    'skill_rating' => $rating,
+                ]);
+            }
+        }
+    }
+
+    return redirect()->back()->with('success', 'Skills saved successfully!');
+}
+
+
+
 }

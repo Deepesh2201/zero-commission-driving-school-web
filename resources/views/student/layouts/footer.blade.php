@@ -77,7 +77,7 @@
 </script>
 
 <!-- JAVASCRIPT -->
-@vite(['resources/sass/app.scss', 'resources/js/app.js'])
+{{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 <script src="{{ url('new-styles/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ url('new-styles/assets/libs/simplebar/simplebar.min.js') }}"></script>
 <script src="{{ url('new-styles/assets/libs/node-waves/waves.min.js') }}"></script>
@@ -134,7 +134,7 @@
         type: 'GET',
         success: function(response) {
             var unreadCount = response.unread_count;
-            
+
             // Check if the notification has been shown in this session
             if (unreadCount > 0 && !sessionStorage.getItem('notificationShown')) {
                 showNotification(response.unread_count); // Show notification popup
@@ -167,7 +167,7 @@
                 let year = createdAt.getFullYear();
 
                 let formattedDateTime = `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
-                
+
                 var notificationItem = `
                     <div class="text-reset notification-item d-block dropdown-item position-relative">
                         <div class="d-flex">

@@ -37,7 +37,7 @@ $studentprofile = studentprofile::where('student_id', session('userid')->id)->fi
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icon@0.1.0/css/feather.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> --}}
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -125,7 +125,7 @@ $("#chartContainer").CanvasJSChart(options);
 
                     </div>
 
-                   
+
 
                     <div class="d-flex">
 
@@ -690,7 +690,7 @@ $("#chartContainer").CanvasJSChart(options);
                                     data-key="t-dashboards"> Assessment Readyness</span> </a>
                         </li>
 
-                       
+
                         <li class="nav-item ">
 
                             <a href="{{ route('student.classes') }}"
@@ -713,7 +713,7 @@ $("#chartContainer").CanvasJSChart(options);
                                     data-key="t-dashboards"> Assignments</span> </a>
                         </li>
 
-                        
+
 
                         <li class="nav-item">
                             <a href="{{ route('student.studentpayments') }}"
@@ -730,10 +730,10 @@ $("#chartContainer").CanvasJSChart(options);
                                 data-key="t-dashboards">
                                 Chat</span> </a>
                     </li>
-                
 
 
-                
+
+
 
 
                 </ul>

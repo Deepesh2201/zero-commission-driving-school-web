@@ -406,6 +406,10 @@ Route::group(['prefix' => 'tutor', 'middleware' => ['TutorAuthenticate']], funct
     Route::get('assignments', [AssignmentsController::class, 'tutorassignments'])->name('tutor.assignments');
     Route::post('assignments', [AssignmentsController::class, 'tutorassignmentscreate'])->name('tutor.assignments.create');
     Route::get('assignments/{id}', [AssignmentsController::class, 'tutorview'])->name('tutor.assignments.view');
+    Route::get('gettheory/{id}', [AssignmentsController::class, 'gettheory'])->name('tutor.gettheory');
+    Route::post('updatetheory', [AssignmentsController::class, 'updatetheory'])->name('tutor.updatetheory');
+    Route::get('studentprogress/{id}', [AssignmentsController::class, 'studentprogress'])->name('tutor.studentprogress');
+    Route::post('savestudentprogress', [AssignmentsController::class, 'savestudentprogress'])->name('tutor.savestudentprogress');
     // Live Classes(GMeet Meeting)
     Route::get('liveclass', [ZoomClassesController::class, 'index'])->name('tutor.liveclass');
     Route::any('liveclass/completed/{id}', [ZoomClassesController::class, 'completed'])->name('tutor.liveclass.completed');
@@ -438,6 +442,7 @@ Route::group(['prefix' => 'tutor', 'middleware' => ['TutorAuthenticate']], funct
     Route::post('sendmessage', [MessagesController::class, 'messagesentbytutor'])->name('tutor.messages.send');
    //payments
    Route::get('payments', [PaymentsController::class, 'tutorStudentPayments'])->name('tutor.payments');
+   Route::get('student/payments/{id}', [PaymentsController::class, 'studentpaymentslist'])->name('tutor.studentpaymentslist');
    Route::any('paymentsearch', [PaymentsController::class, 'paymentSearchTutor'])->name('tutor.paymentsearch');
    Route::post('payment-update', [PaymentsController::class, 'update'])->name('tutor.payments.update');
    // Payouts

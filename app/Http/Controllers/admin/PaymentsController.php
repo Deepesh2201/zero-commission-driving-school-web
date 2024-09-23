@@ -515,4 +515,11 @@ class PaymentsController extends Controller
             'pagination' => $viewPagination
         ]);
     }
+
+    public function studentpaymentslist($id){
+
+        $data = paymentstudents::select('*')->where('student_id',$id)->where('tutor_id',session('userid')->id)->get();
+
+        return response()->json($data);
+    }
 }

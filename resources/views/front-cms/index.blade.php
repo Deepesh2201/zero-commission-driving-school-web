@@ -19,23 +19,9 @@
                     <form action="{{ url('toptutorsearch') }}" method="POST">
                         @csrf
 
-                        <div class="btn-group">
-                            <select class="form-control btn-custm" name="" id="">
-                                <option value="" disabled selected>Select City</option>
-                                @foreach ($classes as $class)
-                                    <option value="{{$class->id}}">{{$class->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
 
                         <div class="btn-group">
-                        <select class="form-control btn-custm" name="" id="">
-                                <option value="">Select Area</option>
-                            </select>
-                        </div>
-
-                        <div class="btn-group">
-                            <button type="submit" class="btn search-tutor">Search</button>
+                            <button type="submit" class="btn search-tutor">Book Now</button>
 
 
                         </div>
